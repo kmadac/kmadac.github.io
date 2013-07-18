@@ -11,7 +11,7 @@ I cloned that VM from existing VM and udev rules where regenerated after reboot.
 There is a script `/lib/udev/write_net_rules` which takes care of generating records to file `70-persistent-net.rules`.
 This script does't accept arguments, but you have to set two environment variables to pass data for the script.
 
-Two important variables as `$INTERFACE` and `$MATCHADDR`
+Two important variables are `$INTERFACE` and `$MATCHADDR`
 Lets say you want to generate udev rule for eth1. First step is to find out mac address which will go to $MATCHADDR variable.
 
     export INTERFACE=eth1
