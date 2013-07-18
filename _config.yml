@@ -5,7 +5,7 @@ rdiscount:
   extensions: [smart]
 title : Kamil Madac
 production_url : http://kmadac.github.io
-description: "Codes, projects and other things by Kamil Madac."
+description: "Codes, projects, thoughts and other things by Kamil Madac."
 author :
   name : Kamil Madac
   github : kmadac
