@@ -9,10 +9,10 @@ When I tried to install Openstack Grizzly on my cloned VM with Ubuntu 12.04, I f
 
 In Ubuntu and probably in Debian as well, there is a script `/lib/udev/write_net_rules` which takes care of generating records to file `70-persistent-net.rules`.
 This script does not accept arguments. You have to set 
-environment variables to pass data for the script.
+environment variables to pass data to the script.
 
 Two important variables are `$INTERFACE` and `$MATCHADDR`
-Lets say you want to generate udev rule for eth1. First step is to find out mac address which will go to $MATCHADDR variable.
+Lets say you want to generate udev rule for eth1. First step is to find out mac address which will go to `$MATCHADDR` variable. Set name of interface to `$INTERFACE` and MAC address of interface to `$MATCHADDR`.
 
     export INTERFACE=eth1
     export MATCHADDR=`ip addr show $INTERFACE | grep ether | awk '{print $2}'`
@@ -22,5 +22,5 @@ Now run the script and check /etc/udev/rules.d/70-persistent-net.rules file whet
     /lib/udev/write_net_rules
     cat /etc/udev/rules.d/70-persistent-net.rules
 
-If rules are there, you can adjust names of interfaces and reboot the machine.
+If rules are there, you can adjust names of interfaces if you want and reboot the machine.
   
