@@ -6,6 +6,7 @@ rdiscount:
 title : Kamil Madac
 production_url : http://kmadac.github.io
 description: "Codes, projects, thoughts and other things by Kamil Madac."
+disqus_shortname: kamilmadacblog
 author :
   name : Kamil Madac
   github : kmadac
