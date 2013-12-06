@@ -153,7 +153,7 @@ This is VM, where I installed old 7-mode OnTap Simulator. It is default Ubuntu 1
 VMs are now prepared and we can install OpenStack Single Node installation using [guide](https://github.com/mseknibilel/OpenStack-Grizzly-Install-Guide) on ostack-grizzly VM.
 
 ## Configuration of provider network
-After installation OpenStack we let's setup our provider network which gives us possibility to communicate directly between OpenStack instancies and Netapp Simulator. Each instance will have one interface with IP address assigned from provider network subnet.
+After installation OpenStack, let's setup our provider network which gives us possibility to communicate directly between OpenStack instancies and Netapp Simulator. Each instance will have one interface with IP address assigned from provider network subnet.
 
 Storage provider network will be on interface eth2. I need to put eth2 to ovs bridge. I named it br-stor. Execute commands on ostack-grizzly VM:
     
