@@ -4,9 +4,9 @@ title: "no_proxy variable in requests"
 category: posts
 ---
 
-During deployment of Openstack we experienced issues with configuration of proxy settings in our environment. To access external sites, we have to user http proxy. We have DNS implemented only in Openstack Management network, but users use VPN access from external networks to reach API endpoints by IP addresses from their notebooks or workstations.
+During deployment of Openstack we experienced issues with configuration of proxy settings in our environment. To access external sites, we have to user http proxy. DNS resolution is implemented only in Openstack Management network, but users use VPN access from external networks to reach API endpoints by IP addresses from their notebooks or workstations.
 
-API endpoints are in network `172.27.8.0/24`. We have multiple API endpoint IPs, because we have more clouds (Production, Test), and these IPs could change in the future.
+API endpoints are in network `172.27.8.0/24`. We have multiple API endpoint IPs, because we have more cloud versions (Production, Test). These IPs could change in the future.
 
 In Linux, we have two variables which we need to setup on machine where we want to have access to APIs addresses and to Internet as well:
  
@@ -18,9 +18,9 @@ export no_proxy=127.0.0.1,localhost.localdomain,172.27.8.0/24
 `http_proxy` environment variable is used to specify http proxy server where we would like to send all http requests.
 `no_proxy` is used to make exceptions and specify, which domains or IP addresses should be reached directly.
 
-Unfortunately, implementation of most of software/libraries (wget, curl, httplib2, requests) is not able to parse network/mask format in no_proxy variable and exclude whole subnet. It is also not possible to use any other format like asterisks or zeros, because there is no other logic behind. This causes Forbidden errors when accessing API from users python script or by `nova`/`glance`/`keystone`/`neutron` client. 
+Unfortunately, implementation of most of software/libraries (wget, curl, httplib2, requests) is not able to parse network/mask format in no_proxy variable and exclude whole subnet. It is also not possible to use any other format like asterisks or zeros. This causes Forbidden errors when accessing API from users python script or by `nova`/`glance`/`keystone`/`neutron` client. 
 
-All clients but `neutron` uses [requests][1] library. Hopefully it'll change in near future, because I just [implemented](https://github.com/kennethreitz/requests/commits?author=kmadac "kmadac no_proxy commits") possiblity to use IP subnets in no_proxy variable into requests module and it was successfully merged to master.
+All openstack clients except `neutron` uses [requests][1] library. Hopefully it'll change in near future, because I just [implemented](https://github.com/kennethreitz/requests/commits?author=kmadac "kmadac no_proxy commits") possiblity to use IP subnets in no_proxy variable into requests module and it was successfully merged to master.
 
 Implementation checks whether http request is valid IP address. If yes, it loops through records in `no_proxy` variable and if record is subnet in CIDR format it checks whether IP in http request belongs to that subnet. If it does, request will be routed directly to http server.
 
