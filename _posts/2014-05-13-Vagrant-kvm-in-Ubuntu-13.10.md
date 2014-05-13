@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Vagrant-kvm in Ubuntu"
+title: "Vagrant-kvm in Ubuntu 13.10"
 category: posts
 ---
 
