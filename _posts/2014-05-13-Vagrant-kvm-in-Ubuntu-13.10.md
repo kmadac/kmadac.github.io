@@ -33,14 +33,8 @@ After this, plugin was installed successfuly.
 ## Get Vagrant KVM image
 
 It is not possible to use Vagrant images prepared for Virtualbox, so we have to convert images for KVM, or download already prepared images.
-I tried to convert existing images with vagrant-mutate plugin, but it always finished with error:
-
-    # vagrant mutate precise32 kvm
-    Vagrant-mutate does not support 0 for input or output
-
-It seems it is incompatibility between Vagrant 1.6.2 and mutate plugin. I opened [issue #55][3]. 
     
-so I downloaded KVM box directly from GitHub page with [KVM Boxes][1]
+I downloaded KVM box directly from [KVM Boxes][1] Github page
 
     # vagrant box add trusty64 https://vagrant-kvm-boxes-si.s3.amazonaws.com/trusty64-kvm-20140418.box
     # vagrant box list
@@ -107,6 +101,57 @@ If you want destroy the VM, run
 
     # vagrant destroy
 
+
+### How to convert Virtualbox image to KVM 
+I tried to convert existing images with vagrant-mutate plugin, but it always finished with error:
+
+    # vagrant mutate precise32 kvm
+    Vagrant-mutate does not support 0 for input or output
+
+It seems it is incompatibility between Vagrant 1.6.2 and mutate plugin. I opened [issue #55][3] and author of plugin recommended to upgrade mutate plugin to version 0.3.0.
+Version 0.3.0 was not uploaded in rubygems, so I cloned vagrant-mutable github repo, generated gem package and installed it:
+
+```  
+cd /tmp; git clone https://github.com/sciurus/vagrant-mutate.git
+cd vagrant-mutate
+rake build
+cd pkg
+vagrant plugin install vagrant-mutate-0.3.0.gem
+```
+
+After upgrade of plugin, I addded Virtualbox image from [Vagrantbox.es][4]
+
+```
+# vagrant box add saucy64 http://cloud-images.ubuntu.com/vagrant/saucy/current/saucy-server-cloudimg-amd64-vagrant-disk1.box
+==> box: Adding box 'saucy64' (v0) for provider: 
+    box: Downloading: http://cloud-images.ubuntu.com/vagrant/saucy/current/saucy-server-cloudimg-amd64-vagrant-disk1.box
+==> box: Successfully added box 'saucy64' (v0) for 'virtualbox'!
+
+# vagrant box list
+saucy64  (virtualbox, 0)
+trusty64 (kvm, 0)
+```
+
+Now we are ready to convert saucy64 from virtualbox to kvm
+
+```
+# vagrant mutate saucy64 kvm
+Converting saucy64 from virtualbox to kvm.
+    (100.00/100%)
+The box saucy64 (kvm) is now ready to use.
+
+# vagrant box list
+saucy64  (kvm, 0)
+saucy64  (virtualbox, 0)
+trusty64 (kvm, 0)
+```
+
+Now, we can prepare `Vagrantfile` for sauce64 and run it with
+
+    vagrant up 
+
+
 [1]: https://github.com/adrahon/vagrant-kvm/wiki/List-boxes "KVM-Boxes"
 [2]: https://www.vagrantup.com/downloads.html "Vagrant downloads"
 [3]: https://github.com/sciurus/vagrant-mutate/issues/55 "Issue 55"
+[4]: http://www.vagrantbox.es/ "vagrantbox.es"
