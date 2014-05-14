@@ -37,6 +37,8 @@ I tried to convert existing images with vagrant-mutate plugin, but it always fin
 
     # vagrant mutate precise32 kvm
     Vagrant-mutate does not support 0 for input or output
+
+It seems it is incompatibility between Vagrant 1.6.2 and mutate plugin. I opened [issue #55][3]. 
     
 so I downloaded KVM box directly from GitHub page with [KVM Boxes][1]
 
@@ -107,3 +109,4 @@ If you want destroy the VM, run
 
 [1]: https://github.com/adrahon/vagrant-kvm/wiki/List-boxes "KVM-Boxes"
 [2]: https://www.vagrantup.com/downloads.html "Vagrant downloads"
+[3]: https://github.com/sciurus/vagrant-mutate/issues/55 "Issue 55"
