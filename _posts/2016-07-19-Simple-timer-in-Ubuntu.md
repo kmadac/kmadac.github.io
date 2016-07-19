@@ -5,7 +5,7 @@ category: posts
 ---
 
 From time to time I like to make a tea during my play with notebook but I don't want to constantly check clock whether time is up to pick out tea bag from the cup. I found out that there is no simple timer app in Ubuntu Unity.
-Thanks to Linux we have `at` command which can schedule any action on system and `notify-send` command which can display notification desktop. By combination of both we have very elegant and easy to use timer without necessity to install anything.
+Thanks to Linux we have `at` command which can schedule any action on system and `notify-send` command which can display notifications on desktop. By combination of both we have very elegant and easy to use timer without necessity to install anything.
 
 
 ## How to set timer to 10 minutes ahead? 
